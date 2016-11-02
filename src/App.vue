@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- el也用ref显示 -->
-    <img class="logo" src="./assets/logo.png" ref="img" @click="showTest">
+    <img class="logo" src="./assets/logo.png" ref="img">
     <hello></hello>
   </div>
 </template>
@@ -16,13 +16,6 @@ export default {
 
   mounted(){
     console.log('el->ref',this.$refs.img)
-    console.log('ref->ref',this.$refs.two)
-  },
-
-  methods: {
-    showTest() {
-      console.log('点了！')
-    }
   },
 }
 </script>
