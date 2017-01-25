@@ -1,28 +1,20 @@
 <template>
-  <div id="app">
-    <!-- el也用ref显示 -->
-    <img class="logo" src="./assets/logo.png" ref="img">
-    <hello></hello>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
-import Hello from './components/Hello'
+import store from './store/store.js'
+import './common/scss/index.scss'
 
 export default {
-  components: {
-    Hello,
-  },
-
-  mounted(){
-    console.log('el->ref',this.$refs.img)
-  },
+  store: store,
 }
 </script>
 
-<style>
+<style lang="scss">
 html {
   height: 100%;
+  transition: height 0.5s;
 }
 
 body {

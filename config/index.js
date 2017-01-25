@@ -5,8 +5,18 @@ var path = require('path'),
 
 var dev = require('./dev.js');
 
+var path = require('path'),
+    entryName = 'index';  //配置入口文件名称
+
 //获取环境对应配置 .env.js
-var envopt = path.resolve(__dirname, './' + env + '.env');
+var envFile = {
+  development: 'dev',
+  testing: 'test',
+  production: 'prod'
+};
+
+var envopt = path.resolve(__dirname, './' + envFile[env] + '.env');
+
 if (!fs.existsSync(envopt + '.js')) {
   envopt = path.resolve(__dirname, './dev.env');
 };

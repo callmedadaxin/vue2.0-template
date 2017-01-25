@@ -2,11 +2,22 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import VueRouter from 'vue-router';
+import VueResource from 'vue-resource'
+import router from './router.js'
 
-/* eslint-disable no-new */
+Vue.use(VueRouter);
+Vue.use(VueResource);
+
+Vue.http.options.headers = {
+  'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
+};
+
+Vue.http.options.emulateJSON = true;
+
 new Vue({
   el: '#app',
-  render: h => h(App)
+  template: '<App/>',
+  router: router,
+  components: { App }
 })
-
-console.log(ENV_OPT);

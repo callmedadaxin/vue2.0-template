@@ -2,6 +2,7 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <div class="test"></div>
+    <router-link to="/page2">page2</router-link>
   </div>
 </template>
 
@@ -24,7 +25,7 @@ h1 {
 .test{
 	width: 100px;
 	height: 100px;
-	background-image: url("../assets/logo.png");
+	background-image: url("./img/logo.png");
   background-size: 100% 100%;
   display: inline-block;
 }
