@@ -11,14 +11,17 @@ var env = config.build.env
 var webpackConfig = merge(baseWebpackConfig, {
   entry: config.build.entry,
   module: {
-    loaders: utils.styleLoaders({ sourceMap: config.build.productionSourceMap, extract: true })
+    loaders: utils.styleLoaders({
+      sourceMap: config.build.productionSourceMap,
+      extract: true
+    })
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
     path: config.build.assetsRoot,
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js'),
-    publicPath: config.build.publicPath
+    publicPath: env.NODE_ENV == 'development' ? config.build.publicPath : env.cdnUrl || config.build.publicPath
   },
   vue: {
     loaders: utils.cssLoaders({
@@ -37,7 +40,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      minChunks: function (module, count) {
+      minChunks: function(module, count) {
         // any required modules inside node_modules are extracted to vendor
         return (
           module.resource &&
@@ -61,7 +64,7 @@ var webpackConfig = merge(baseWebpackConfig, {
 })
 
 //根据配置进行判断
-if(env.isUglyfy){
+if (env.isUglyfy) {
   webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
     compress: {
       warnings: false
@@ -79,18 +82,13 @@ html.map(function(item) {
   itemPath = path.resolve(__dirname, itemPath);
 
   //配置入口文件
-  var chunks = ['manifest', 'vendor'].concat(item.entrys);
+  var chunks = item.entrys ? ['manifest', 'vendor'].concat(item.entrys) : [];
 
   webpackConfig.plugins.push(new HtmlWebpackPlugin({
     filename: itemPath,
     template: template,
     inject: true,
     title: item.title || 'Document',
-    minify: {
-      removeComments: true,
-      collapseWhitespace: true,
-      removeAttributeQuotes: true
-    },
     chunks: chunks,
     chunksSortMode: 'dependency',
   }));

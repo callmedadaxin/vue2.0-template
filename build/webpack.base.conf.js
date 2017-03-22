@@ -20,7 +20,7 @@ module.exports = {
       'assets': path.resolve(__dirname, '../src/assets'),
       'components': path.resolve(__dirname, '../src/components')
     },
-    modulesDirectories: ['node_modules', './src/components']
+    modulesDirectories: ['node_modules', './src/components', './src/']
   },
   resolveLoader: {
     fallback: [path.join(__dirname, '../node_modules')]

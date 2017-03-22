@@ -17,10 +17,10 @@ npm run dev port
 npm run build
 
 # 测试环境编译
-npm run build:test
+npm run build test
 
 # 生产环境编译
-npm run build:prod
+npm run build prod
 ```
 
 ## 配置

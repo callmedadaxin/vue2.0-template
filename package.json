@@ -5,10 +5,8 @@
   "author": "王卫新 <wangweixin@moxiu.net>",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development node build/dev-server.js",
-    "build": "NODE_ENV=development node build/build.js",
-    "build:test": "NODE_ENV=testing node build/build.js",
-    "build:prod": "NODE_ENV=production node build/build.js"
+    "dev": "node build/dev-server.js",
+    "build": "node build/build.js"
   },
   "dependencies": {
     "node-sass": "^3.10.1",
