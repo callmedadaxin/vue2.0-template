@@ -8,21 +8,16 @@ import router from './router.js'
 import 'common/scss/index.scss'
 
 Vue.use(VueRouter);
-Vue.use(VueResource);
 
 //toast
 import Toast from 'lib/toast/index.js'
 Vue.use(Toast);
 
-Vue.http.options.headers = {
-  'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
-};
-
-Vue.http.options.emulateJSON = true;
-
 new Vue({
   el: '#app',
   template: '<App/>',
   router: router,
-  components: { App }
+  components: {
+    App
+  }
 })
