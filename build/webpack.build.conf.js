@@ -6,6 +6,7 @@ var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+var AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 var env = config.build.env
 
 var webpackConfig = merge(baseWebpackConfig, {
@@ -21,7 +22,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     path: config.build.assetsRoot,
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js'),
-    publicPath: env.NODE_ENV == 'development' ? config.build.publicPath : env.cdnUrl || config.build.publicPath
+    publicPath: config.build.publicPath
   },
   vue: {
     loaders: utils.cssLoaders({
@@ -32,7 +33,7 @@ var webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
-      'process.env': env
+      'process.env': env.NODE_ENV
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     // extract css into its own file
@@ -59,7 +60,12 @@ var webpackConfig = merge(baseWebpackConfig, {
     }),
     new webpack.ProvidePlugin({
       ENV_OPT: config.build.envopt
-    })
+    }),
+    // webpack dllplugin
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require(path.join(config.build.dll.basePath, config.build.dll.manifest)),
+    }),
   ]
 })
 
@@ -77,7 +83,7 @@ var html = config.build.html;
 
 html.map(function(item) {
   var itemPath = path.join(config.build.htmlOutputPath, item.filename);
-  var template = path.join('./src/', item.tmplPath || 'index.ejs');
+  var template = item.tmplPath || './src/index.ejs';
 
   itemPath = path.resolve(__dirname, itemPath);
 
@@ -85,13 +91,19 @@ html.map(function(item) {
   var chunks = item.entrys ? ['manifest', 'vendor'].concat(item.entrys) : [];
 
   webpackConfig.plugins.push(new HtmlWebpackPlugin({
-    filename: itemPath,
-    template: template,
-    inject: true,
-    title: item.title || 'Document',
-    chunks: chunks,
-    chunksSortMode: 'dependency',
-  }));
+      filename: itemPath,
+      template: template,
+      inject: true,
+      title: item.title || 'Document',
+      chunks: chunks,
+      chunksSortMode: 'dependency',
+    }),
+    new AddAssetHtmlPlugin([{
+      filepath: path.resolve(__dirname, config.build.dll.basePath, config.build.dll.fileName),
+      outputPath: utils.assetsPath('common/js/'),
+      publicPath: path.join(config.build.publicPath, 'common/js'),
+      includeSourcemap: true
+    }]));
 })
 
 module.exports = webpackConfig

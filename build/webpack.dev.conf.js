@@ -9,7 +9,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var devEntry = {};
 
 // add hot-reload related code to entry chunks
-Object.keys(config.dev.entry).forEach(function (name) {
+Object.keys(config.dev.entry).forEach(function(name) {
   devEntry[name] = ['./build/dev-client'].concat(config.dev.entry[name])
 })
 
@@ -19,7 +19,9 @@ module.exports = merge(baseWebpackConfig, {
     publicPath: '',
   },
   module: {
-    loaders: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
+    loaders: utils.styleLoaders({
+      sourceMap: config.dev.cssSourceMap
+    })
   },
   // eval-source-map is faster for development
   devtool: '#eval-source-map',
@@ -33,8 +35,7 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.NoErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: 'index.html',
-      // template: path.join('./src/tmpl/', config.dev.tmpl || 'index.html'),
+      template: config.dev.tmpl || '.src/index.ejs',
       template: './src/index.ejs',
       inject: true
     }),

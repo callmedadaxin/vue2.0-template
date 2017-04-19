@@ -30,8 +30,8 @@ module.exports = {
       filename: 'index.html', //模板输出名称
       entrys: ['index'], //页面需要引用的入口文件
       title: '测试', //html中的title
-      tmplPath: './index.ejs' //模板路径，以src为起始路径
-    }, ],
+      tmplPath: './src/index.ejs' //模板原始路径
+    }],
     htmlOutputPath: '../public/', //模板输出路径
     assetsRoot: path.resolve(__dirname, '../public/static/'), //静态资源输出根路径
     assetsSubDirectory: '',
@@ -41,7 +41,12 @@ module.exports = {
     envopt: envopt,
     env: require(envopt),
     productionGzip: false,
-    productionGzipExtensions: ['js', 'css']
+    productionGzipExtensions: ['js', 'css'],
+    dll: {
+      basePath: '../common/js',
+      fileName: 'lib.js',
+      manifest: 'manifest.json',
+    },
   },
   dev: dev
 }

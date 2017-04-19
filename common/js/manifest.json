@@ -1,0 +1,9 @@
+{
+  "name": "lib",
+  "content": {
+    "../node_modules/.vue-resource@1.3.1/dist/vue-resource.common.js": 1,
+    "../node_modules/.vue-router@2.4.0/dist/vue-router.common.js": 2,
+    "../node_modules/.vue@2.2.6/dist/vue.common.js": 3,
+    "../node_modules/.vuex@2.3.1/dist/vuex.js": 4
+  }
+}
