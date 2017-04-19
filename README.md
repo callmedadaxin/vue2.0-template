@@ -4,6 +4,19 @@
 
 在vue-cli webpack模板上进行修改。
 
+## 修改/添加功能
+- 开发/测试/生产环境区分，暴露环境下不同公有变量
+- 多页面build支持
+- dllPlugin优化打包，自动引入打包文件
+- 基本目录修改
+- 辅助插件库
+
+//TODO
+- 编译速度优化
+- 添加移动端调试v-console
+- 脚手架
+- run dev 下mock数据
+
 ## Build Setup
 
 ``` bash
@@ -68,18 +81,12 @@ build: {
 ```
 
 ## 不同环境区分
-在config.*.env.js中进行不同环境配置
+在config.*.env.js中进行不同环境配置，使用providePlugin暴露在全局中，通过ENV_OPT变量进行访问。
 
 ```
 NODE_ENV //环境
 isUglyfy //是否压缩代码
 其他 //暴露全局变量，如接口等,可自行配置
-```
-
-全局变量通过 ENV_OPT 进行访问，如
-
-```
-ENV_OPT.baseApi;
 ```
 
 ## dllPlugin
