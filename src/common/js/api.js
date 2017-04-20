@@ -59,6 +59,8 @@ Vue.http.interceptors.push((request, next) => {
 export const get = function(url, data, showLoading) {
   if (typeof(data) == 'object' && data !== null) {
     var params = '&' + formatParams(data);
+  } else {
+    params = '';
   }
 
   if (typeof(data) == 'boolean') {

@@ -7,6 +7,7 @@
 
 <script>
 import Foo from 'foo';
+import { get } from 'common/js/api';
 
 export default {
   data () {
@@ -17,6 +18,16 @@ export default {
 
   components: {
   	Foo
+  },
+
+  created() {
+    get('user').then(r => {
+      console.log(r);
+    })
+
+    get('list').then(r => {
+      console.log(r);
+    })
   }
 };
 </script>

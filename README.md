@@ -10,12 +10,12 @@
 - dllPlugin优化打包，自动引入打包文件
 - 基本目录修改
 - 辅助插件库
+- run dev 下mock数据
 
 //TODO
 - 编译速度优化
 - 添加移动端调试v-console
 - 脚手架
-- run dev 下mock数据
 
 ## Build Setup
 
@@ -36,7 +36,7 @@ npm run build test
 npm run build prod
 ```
 
-## 配置修改
+## 基本配置修改
 ### 1.config/dev.js  
 npm run dev 调试配置，单个页面进行调试
 
@@ -93,10 +93,110 @@ isUglyfy //是否压缩代码
 利用 DllPlugin 和 DllReferencePlugin 预编译资源模块,避免重复打包等问题
 使用 [add-asset-html-webpack-plugin](https://github.com/SimenB/add-asset-html-webpack-plugin) 自动引入页面
 
-### 配置
+### ddlPlugin入口配置
 config/lib.dependencies.js
 
 根据需求自行添加，已默认加入vue全家桶。
+
+## mock数据
+vue-cli使用express启用服务监听调试，我们直接在express增加路由，mock数据，方便前后端并行开发。
+
+### 使用方式
+
+默认mock接口在 /mock/下
+
+我们统一在config/dev.env.js配置公有接口头为/mock
+
+```
+module.exports = merge(prodEnv, {
+  NODE_ENV: '"development"',
+  isUglyfy: false, //是否压缩
+  baseApi: '/mock/'
+})
+```
+
+然后直接访问即可:
+
+```
+get('user').then(r => {
+  console.log(r);
+})
+```
+
+#### 1.使用.json文件mock
+mock数据：
+
+``` json
+//mock/user.json
+
+{
+  "code": 200,
+  "data": {
+    "login": true,
+    "uid": 345345,
+    "username": "这里是用户名"
+  }
+}
+```
+
+mock接口：
+
+``` js
+//routes/index.js
+var user = require('../mock/user.json');
+
+router.get('/user/', function(req, res, next) {
+  res.json(Mock.mock(user));
+});
+``` 
+
+#### 2.使用mock.js进行mock
+使用mock.js随机生成数据
+
+[参考文档](http://mockjs.com/0.1/)
+
+``` js
+//使用mock.js语法进行mock
+var template = {
+  'title': 'Syntax Demo',
+
+  'string1|1-10': '★',
+  'string2|3': 'value',
+
+  'number6|123.10': 1.123,
+
+  'boolean2|1-2': true,
+
+  'object1|2-4': {
+    '110000': '北京市',
+    '120000': '天津市',
+    '130000': '河北省',
+    '140000': '山西省'
+  },
+  'object2|2': {
+    '310000': '上海市',
+    '320000': '江苏省',
+    '330000': '浙江省',
+    '340000': '安徽省'
+  },
+
+  'array1|1': ['AMD', 'CMD', 'KMD', 'UMD'],
+  'array2|1-10': ['Mock.js'],
+  'array3|3': ['Mock.js'],
+
+  'function': function() {
+    return this.title
+  }
+}
+var data = Mock.mock({
+  'code': 200,
+  'data': template
+})
+
+router.get('/list/', function(req, res, next) {
+  res.json(data);
+});
+```
 
 
 

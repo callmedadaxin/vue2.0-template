@@ -1,0 +1,8 @@
+{
+  "code": 200,
+  "data": {
+    "login": true,
+    "uid": 345345,
+    "username": "这里是用户名"
+  }
+}
