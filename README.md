@@ -11,10 +11,10 @@
 - 基本目录修改
 - 辅助插件库
 - run dev 下mock数据
+- 添加移动端调试v-console
 
 //TODO
 - 编译速度优化
-- 添加移动端调试v-console
 - 脚手架
 
 ## Build Setup
@@ -97,6 +97,20 @@ isUglyfy //是否压缩代码
 config/lib.dependencies.js
 
 根据需求自行添加，已默认加入vue全家桶。
+
+## 移动端调试 v-console
+使用[微信vConsole](https://github.com/WechatFE/vConsole),添加element插件，可以调试log,netWork,Syetem,element等，极大解决了移动端调试难题。通过环境配置其是否展示，默认开发环境下展示
+
+```
+module.exports = merge(prodEnv, {
+  NODE_ENV: '"development"',
+  isUglyfy: false, //是否压缩
+  showVConsole: true, //是否显示v-console
+  baseApi: '/mock/'
+})
+```
+
+![v-console]('./assets/v-console.png');
 
 ## mock数据
 vue-cli使用express启用服务监听调试，我们直接在express增加路由，mock数据，方便前后端并行开发。

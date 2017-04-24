@@ -2,8 +2,9 @@ var path = require('path')
 var config = require('../config')
 var utils = require('./utils')
 var projectRoot = path.resolve(__dirname, '../')
+var env = config.build.env
 
-module.exports = {
+var webpackBaseConfig = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js'
@@ -59,3 +60,15 @@ module.exports = {
     ]
   }
 }
+
+if (env.showVConsole) {
+  if (webpackBaseConfig.entry) {
+    webpackBaseConfig.entry.vConsole = './build/v-console.js';
+  } else {
+    webpackBaseConfig.entry = {
+      vConsole: './build/v-console.js',
+    }
+  }
+}
+
+module.exports = webpackBaseConfig;
