@@ -2,7 +2,8 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <div class="test"></div>
-    <router-link to="/page2">page2</router-link>
+    <router-link to="/page2">滚动加载</router-link>
+    <router-link to="/page3">全屏swiper</router-link>
   </div>
 </template>
 

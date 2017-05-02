@@ -22,13 +22,23 @@
 </template>
 
 <script>
-import { post } from 'common/js/api.js';
+import Vue from 'vue'
+import AlloyTouch from 'lib/alloy_touch/alloy_touch.vue.js'
+import { post, get } from 'common/js/api.js'
+
+Vue.use(AlloyTouch)
 
 export default {
   props: {
     //请求接口
     api: {
       type: String,
+    },
+
+    //请求类型
+    method: {
+      type: String,
+      default: 'GET'
     },
 
     //请求参数
@@ -91,7 +101,8 @@ export default {
         return;
       }
 
-      let data = Object.assign({}, this.data, this.meta);
+      let data = Object.assign({}, this.data, this.meta),
+        method = this.method === 'GET' ? get : post;
 
       post(this.api, data).then(r=>{
         this.items = this.items.concat(r.data.list);

@@ -9,45 +9,32 @@ router.get('/user/', function(req, res, next) {
   res.json(Mock.mock(user));
 });
 
-//使用mock.js语法进行mock
-var template = {
-  'title': 'Syntax Demo',
 
-  'string1|1-10': '★',
-  'string2|3': 'value',
 
-  'number6|123.10': 1.123,
+router.post('/list/', function(req, res, next) {
+  var page = parseInt(req.page) || 1
 
-  'boolean2|1-2': true,
-
-  'object1|2-4': {
-    '110000': '北京市',
-    '120000': '天津市',
-    '130000': '河北省',
-    '140000': '山西省'
-  },
-  'object2|2': {
-    '310000': '上海市',
-    '320000': '江苏省',
-    '330000': '浙江省',
-    '340000': '安徽省'
-  },
-
-  'array1|1': ['AMD', 'CMD', 'KMD', 'UMD'],
-  'array2|1-10': ['Mock.js'],
-  'array3|3': ['Mock.js'],
-
-  'function': function() {
-    return this.title
+  //使用mock.js语法进行mock
+  var template = {
+    'title': 'list demo',
+    'list|10': [{
+      src: Mock.Random.image('250x250'),
+    }],
+    'meta': {
+      page: ++page,
+      limit: 10,
+      pages: 100
+    }
   }
-}
-var data = Mock.mock({
-  'code': 200,
-  'data': template
-})
 
-router.get('/list/', function(req, res, next) {
-  res.json(data);
+  var data = Mock.mock({
+    'code': 200,
+    'data': template
+  })
+
+  console.log(data);
+
+  res.json(data)
 });
 
 

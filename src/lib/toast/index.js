@@ -20,23 +20,22 @@ const Modal = Vue.extend(Toast);
 
 let instance = new Modal().$mount('#m-toast');
 
-const toast = function (msg) {
+const toast = function(msg) {
 	console.log(msg);
 	instance.msg = msg;
 	instance.showToast();
 }
 
-const showLoading = function (msg) {
+const showLoading = function(msg) {
 	instance.showLoading();
 }
 
-
-const hideLoading = function (msg) {
+const hideLoading = function(msg) {
 	instance.hideLoading();
 }
 
 export default {
-	install : function () {
+	install: function() {
 		Vue.toast = toast;
 		Vue.showLoading = showLoading;
 		Vue.hideLoading = hideLoading;
@@ -46,4 +45,3 @@ export default {
 		Vue.prototype.$hideLoading = hideLoading;
 	}
 }
-

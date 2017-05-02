@@ -43,17 +43,17 @@ export default {
   },
 
   mounted() {
-  	this.slideEls = [].map.call(this.$refs.swiperWrap.children, el => el);
+  	// this.slideEls = [].map.call(this.$refs.swiperWrap.children, el => el);
 
   	new FullPage('#swiper', {
-  		animationEnd:function () {
-      
+  		animationEnd: () => {
+        this.$emit('animation-end');
       },
-      leavePage: function (index) {
-        console.log("leave"+index)
+      leavePage: index => {
+        this.$emit('leave-page', index);
       },
-      beginToPage: function (index) {
-        console.log("to"+index);
+      beginToPage: index => {
+        this.$emit('begin-to-page', index);
       },
       duration: this.duration,
       vertical: this.vertical
